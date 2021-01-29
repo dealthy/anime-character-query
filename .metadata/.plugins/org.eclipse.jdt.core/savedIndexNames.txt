@@ -1,0 +1,3 @@
+INDEX VERSION 1.131+/Volumes/SHARE/ComputerScience/HarryYu-IBCSdatabaseMiniProject/.metadata/.plugins/org.eclipse.jdt.core
+2141063372.index
+3416613644.index
