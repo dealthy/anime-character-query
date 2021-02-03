@@ -62,10 +62,6 @@ public class listPage extends JFrame {
 		contentPane.add(scrollCharacterInfo);
 		
 		JButton searchButton = new JButton("search");
-		searchButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
 		searchButton.setBackground(Color.WHITE);
 		searchButton.setFont(new Font("Courier", Font.PLAIN, 14));
 		searchButton.setBounds(452, 40, 149, 35);
@@ -73,7 +69,7 @@ public class listPage extends JFrame {
 		
 		JLabel sortingMech = new JLabel("sorting mechanism");
 		sortingMech.setFont(new Font("Courier", Font.PLAIN, 14));
-		sortingMech.setBounds(452, 124, 149, 35);
+		sortingMech.setBounds(452, 132, 149, 35);
 		contentPane.add(sortingMech);
 		
 		JButton setSort = new JButton("sort");
