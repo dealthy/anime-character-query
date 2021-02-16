@@ -7,7 +7,7 @@ Further Development
  - editing & browsing mode for the page
  - create/delete a character
  - sorting mechanism
- - be more powerful 
+ - database development
  	- nicknames, famous quotes
  	- belonging anime -- linked to anime table
  	- linked characters + relationship

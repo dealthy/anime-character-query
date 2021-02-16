@@ -92,7 +92,7 @@ public class listPage extends JFrame {
 		setSort.setBounds(452, 157, 149, 35);
 		contentPane.add(setSort);
 		
-		JLabel searchSuggestion = new JLabel("Most Searched/Recent Search");
+		JLabel searchSuggestion = new JLabel("Most Searched");
 		searchSuggestion.setFont(new Font("Courier", Font.PLAIN, 14));
 		searchSuggestion.setBounds(40, 87, 400, 33);
 		contentPane.add(searchSuggestion);
