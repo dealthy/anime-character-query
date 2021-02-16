@@ -54,14 +54,18 @@ public class listPage extends JFrame {
 		searchWord.setColumns(10);
 		
 		JList characterInfo = new JList();
-		characterInfo.setBounds(40, 86, 400, 636);
+		characterInfo.setBounds(40, 132, 400, 590);
 		contentPane.add(characterInfo);
 		
 		JScrollPane scrollCharacterInfo = new JScrollPane();
-		scrollCharacterInfo.setBounds(38, 87, 402, 635);
+		scrollCharacterInfo.setBounds(38, 132, 402, 590);
 		contentPane.add(scrollCharacterInfo);
 		
 		JButton searchButton = new JButton("search");
+		searchButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
 		searchButton.setBackground(Color.WHITE);
 		searchButton.setFont(new Font("Courier", Font.PLAIN, 14));
 		searchButton.setBounds(452, 40, 149, 35);
@@ -69,7 +73,7 @@ public class listPage extends JFrame {
 		
 		JLabel sortingMech = new JLabel("sorting mechanism");
 		sortingMech.setFont(new Font("Courier", Font.PLAIN, 14));
-		sortingMech.setBounds(452, 86, 149, 35);
+		sortingMech.setBounds(452, 124, 149, 35);
 		contentPane.add(sortingMech);
 		
 		JButton setSort = new JButton("sort");
@@ -78,7 +82,12 @@ public class listPage extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 			}
 		});
-		setSort.setBounds(452, 132, 149, 35);
+		setSort.setBounds(452, 179, 149, 35);
 		contentPane.add(setSort);
+		
+		JLabel searchSuggestion = new JLabel("Most Searched/Recent Search");
+		searchSuggestion.setFont(new Font("Courier", Font.PLAIN, 14));
+		searchSuggestion.setBounds(40, 87, 400, 33);
+		contentPane.add(searchSuggestion);
 	}
 }
