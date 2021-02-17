@@ -10,19 +10,21 @@ import javax.swing.JTextField;
 import javax.swing.JLabel;
 import java.awt.Font;
 import java.awt.Color;
+import java.awt.Component;
+
 import javax.swing.ImageIcon;
-import java.awt.Dimension;
-import java.awt.Graphics;
+import javax.swing.SwingConstants;
 import java.awt.Image;
-import javax.swing.Icon;
-import javax.swing.ImageIcon;
-import javax.swing.JComponent;
 
 public class infoPage extends JFrame {
 
+	/**
+	 *
+	 */
+	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JTextField searchWord;
-	infoPage frame = new infoPage();
+	private JTextField textField;
 	/**
 	 * Launch the application.
 	 */
@@ -43,6 +45,7 @@ public class infoPage extends JFrame {
 	 * Create the frame.
 	 */
 	public infoPage() {
+		//frame
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 650, 800);
 		contentPane = new JPanel();
@@ -52,23 +55,36 @@ public class infoPage extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		searchWord = new JTextField();
-		searchWord.setEditable(false);
-		searchWord.setBounds(423, 6, 197, 31); 
-		searchWord.setColumns(10);
-		
+		//page title
 		JLabel pageTitle = new JLabel("Page Title");
 		pageTitle.setFont(new Font("Courier", Font.PLAIN, 20));
 		pageTitle.setBounds(24, 49, 599, 36);
 		contentPane.add(pageTitle);
 		
+		//divider
 		JLabel divider = new JLabel("_____________________________________________________________________________________");
 		divider.setForeground(Color.BLACK);
 		divider.setBounds(24, 69, 596, 16);
 		contentPane.add(divider);
-
-		//image component added with manual code
-		frame.add(new JLabel(new ImageIcon("Path/To/Your/Image.png")));
-
+		
+		//search bar
+		searchWord = new JTextField();
+		searchWord.setFont(new Font("Courier", Font.PLAIN, 14));
+		searchWord.setBounds(466, 6, 157, 36);
+		contentPane.add(searchWord);
+		searchWord.setColumns(10);
+		
+		//inserting image via JLabel
+		JLabel titleimage = new JLabel("");
+		titleimage.setVerticalAlignment(SwingConstants.CENTER);
+		//resizing the image to scale
+		ImageIcon imageIcon = new ImageIcon("/Volumes/SHARE/ComputerScience/HarryYu-IBCSdatabaseMiniProject/animeCharacterQuery/doctorGiovanni.png");
+		Image image = imageIcon.getImage(); 
+		Image newimg = image.getScaledInstance(323, 485, java.awt.Image.SCALE_SMOOTH); 
+		imageIcon = new ImageIcon(newimg);
+		//if bounds of JLabel changed, change getScaleInstance() as well 
+		titleimage.setIcon(imageIcon);
+		titleimage.setBounds(300, 97, 323, 485);
+		contentPane.add(titleimage);
 	}
 }
