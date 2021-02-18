@@ -7,6 +7,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JTextField;
+import javax.swing.SwingConstants;
 import javax.swing.JList;
 import javax.swing.JScrollPane;
 import javax.swing.JButton;
@@ -41,6 +42,9 @@ public class listPage extends JFrame {
 	 * Create the frame.
 	 */
 	public listPage() {
+
+		//do prefix sum for the entire history database
+
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 650, 800);
 		contentPane = new JPanel();
@@ -64,6 +68,9 @@ public class listPage extends JFrame {
 		JButton searchButton = new JButton("search");
 		searchButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				//search keyword
+					//seperate the search word word by word
+					//
 			}
 		});
 		searchButton.setBackground(Color.WHITE);
@@ -71,7 +78,7 @@ public class listPage extends JFrame {
 		searchButton.setBounds(452, 40, 149, 35);
 		contentPane.add(searchButton);
 		
-		JLabel sortingMech = new JLabel("sorting mechanism");
+		JLabel sortingMech = new JLabel("A->Z", SwingConstants.CENTER);
 		sortingMech.setFont(new Font("Courier", Font.PLAIN, 14));
 		sortingMech.setBounds(452, 124, 149, 35);
 		contentPane.add(sortingMech);
@@ -82,12 +89,44 @@ public class listPage extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 			}
 		});
-		setSort.setBounds(452, 179, 149, 35);
+		setSort.setBounds(452, 157, 149, 35);
 		contentPane.add(setSort);
 		
-		JLabel searchSuggestion = new JLabel("Most Searched/Recent Search");
+		JLabel searchSuggestion = new JLabel("Most Searched");
 		searchSuggestion.setFont(new Font("Courier", Font.PLAIN, 14));
 		searchSuggestion.setBounds(40, 87, 400, 33);
 		contentPane.add(searchSuggestion);
+		
+		JButton btnBrowse = new JButton("browse");
+		btnBrowse.setFont(new Font("Courier", Font.PLAIN, 14));
+		btnBrowse.setBounds(452, 226, 149, 35);
+		contentPane.add(btnBrowse);
+		
+		JButton btnEdit = new JButton("edit");
+		btnEdit.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		btnEdit.setFont(new Font("Courier", Font.PLAIN, 14));
+		btnEdit.setBounds(452, 273, 149, 35);
+		contentPane.add(btnEdit);
+		
+		JButton btnCreate = new JButton("create");
+		btnCreate.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		btnCreate.setFont(new Font("Courier", Font.PLAIN, 14));
+		btnCreate.setBounds(452, 348, 149, 35);
+		contentPane.add(btnCreate);
+		
+		JButton btnDelete = new JButton("delete");
+		btnDelete.setFont(new Font("Courier", Font.PLAIN, 14));
+		btnDelete.setBounds(452, 395, 149, 35);
+		contentPane.add(btnDelete);
+
+		//display most searched word
+			//record the previous search && add to the prefix sum calc
+			//suggest the current most searched
 	}
 }
