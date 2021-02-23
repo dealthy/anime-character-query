@@ -16,7 +16,7 @@ import java.awt.Font;
 import java.awt.Color;
 import javax.swing.JLabel;
 import java.awt.event.ActionListener;
-import java.beans.Statement;
+import java.sql.Statement;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -132,6 +132,8 @@ public class listPage extends JFrame {
 		infoPageButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				//go to infoPage
+				infoPage info = new infoPage();
+				info.setVisible(true);
 			}
 		});
 		infoPageButton.setFont(new Font("Courier", Font.PLAIN, 14));
@@ -152,6 +154,8 @@ public class listPage extends JFrame {
 		createPageButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				//go to createPage
+				addCharacter newcharacter = new addCharacter();
+				newcharacter.setVisible(true);
 			}
 		});
 		createPageButton.setFont(new Font("Courier", Font.PLAIN, 14));

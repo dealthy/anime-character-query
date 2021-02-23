@@ -14,6 +14,13 @@
 	<natures>
 		<nature>org.eclipse.jdt.core.javanature</nature>
 	</natures>
+	<linkedResources>
+		<link>
+			<name>src/animeCharacterQuery/Scalr.java</name>
+			<type>1</type>
+			<location>/Volumes/SHARE/ComputerScience/resources/imgscalr/src/main/java/org/imgscalr/Scalr.java</location>
+		</link>
+	</linkedResources>
 	<filteredResources>
 		<filter>
 			<id>1611887255380</id>

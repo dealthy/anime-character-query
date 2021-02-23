@@ -6,22 +6,25 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import animeCharacterQuery.Scalr.Method;
+
 import javax.swing.JTextField;
 import javax.swing.JLabel;
 import java.awt.Font;
 import java.awt.Color;
 import java.awt.Component;
 
+import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.SwingConstants;
 import java.awt.Image;
+import java.awt.image.BufferedImage;
+import java.io.File;
 
 public class infoPage extends JFrame {
-
-	/**
-	 *
-	 */
-	private static final long serialVersionUID = 1L;
+	
+	//private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JTextField searchWord;
 	private JTextField textField;
@@ -30,9 +33,11 @@ public class infoPage extends JFrame {
 	 */
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
+			//default character
+			String character = "nanamichiaki";
 			public void run() {
 				try {
-					infoPage frame = new infoPage();
+					infoPage frame = new infoPage(character);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -44,7 +49,7 @@ public class infoPage extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public infoPage() {
+	public infoPage(String character) {
 		//frame
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 650, 800);
@@ -56,7 +61,7 @@ public class infoPage extends JFrame {
 		contentPane.setLayout(null);
 		
 		//page title
-		JLabel pageTitle = new JLabel("Page Title");
+		JLabel pageTitle = new JLabel(character);
 		pageTitle.setFont(new Font("Courier", Font.PLAIN, 20));
 		pageTitle.setBounds(24, 49, 599, 36);
 		contentPane.add(pageTitle);
@@ -74,17 +79,36 @@ public class infoPage extends JFrame {
 		contentPane.add(searchWord);
 		searchWord.setColumns(10);
 		
+		//search for the image path for the corresponding character
+		File imagepath = new File("/Volumes/SHARE/ComputerScience/HarryYu-IBCSdatabaseMiniProject/animeCharacterQuery/" + character + ".jpeg");
 		//inserting image via JLabel
 		JLabel titleimage = new JLabel("");
 		titleimage.setVerticalAlignment(SwingConstants.CENTER);
+		/*
 		//resizing the image to scale
-		ImageIcon imageIcon = new ImageIcon("/Volumes/SHARE/ComputerScience/HarryYu-IBCSdatabaseMiniProject/animeCharacterQuery/doctorGiovanni.png");
+		ImageIcon imageIcon = new ImageIcon(path);
 		Image image = imageIcon.getImage(); 
-		Image newimg = image.getScaledInstance(323, 485, java.awt.Image.SCALE_SMOOTH); 
+		Image newimg = image.getScaledInstance(589, 485, java.awt.Image.SCALE_AREA_AVERAGING); 
 		imageIcon = new ImageIcon(newimg);
-		//if bounds of JLabel changed, change getScaleInstance() as well 
-		titleimage.setIcon(imageIcon);
-		titleimage.setBounds(300, 97, 323, 485);
+		//if bounds of JLabel changed, change getScaleInstance() as well
+		 * 
+		 */
+		try {
+			BufferedImage image = ImageIO.read(imagepath);
+			System.out.println(image.getWidth());
+			int prespace = ( 650 - image.getWidth() ) / 2 ;
+			System.out.println(prespace);
+			//BufferedImage scaledImg = Scalr.resize(image, 589, image.getWidth());
+			BufferedImage scaledImg = Scalr.resize(image, Method.QUALITY, 589, 485, Scalr.OP_ANTIALIAS);
+			ImageIcon imageicon = new ImageIcon(scaledImg);
+			titleimage.setIcon(imageicon);
+			titleimage.setBounds(prespace, 97, 589, 485);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
 		contentPane.add(titleimage);
+		
+		
 	}
 }
