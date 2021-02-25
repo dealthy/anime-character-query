@@ -13,11 +13,16 @@ Further Developments
  	- linked characters + relationship
  	- ...
  - [] aesthetics
- - [] command + w to exit the app
- - [] create corresponding subpages: infopage + createpage + browsing page
- - [] infopage image display in the middle of the screen
+ - [x] command + w to exit the app
+ - [] create corresponding subpages
+ 	- [x] infopage
+ 	- [] browsing page
+ 	- [x] create page
+ - [x] infopage image display in the middle of the screen
  - *info page that display database data (try to imitate Moegirlpedia / Wikipedia style)
- - *black bars to block words
+ - [] black bars to block words
+ 	- [x] use https://www.javatpoint.com/java-jtextpane content to insert custome background + foreground to the text
+ 	- [] create 2 modes while reading, exposed + hidden modes
 
 
  Setting https://github.com/moegirlwiki/ (a chinese online anime character "wikipedia" site) as the developing model

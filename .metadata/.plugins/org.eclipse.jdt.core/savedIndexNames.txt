@@ -3,5 +3,4 @@ INDEX VERSION 1.131+/Volumes/SHARE/ComputerScience/HarryYu-IBCSdatabaseMiniProje
 2277434545.index
 1303036939.index
 2540607589.index
-985988326.index
 3416613644.index

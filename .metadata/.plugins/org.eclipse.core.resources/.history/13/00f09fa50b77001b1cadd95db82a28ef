@@ -1,0 +1,14 @@
+package animeCharacterQuery;
+
+import java.sql.SQLException;
+import javax.swing.DefaultListModel;
+import javax.swing.JList;
+
+public interface databaseinfo {
+	
+	public abstract DefaultListModel display(String db, JList table) throws SQLException;
+	public abstract void create(String db, String firstname, String lastname, String animefrom) throws SQLException;
+	public abstract void delete(String db, int characterid) throws SQLException;
+	public abstract void update(String db, String firstname, String lastname, String animefrom) throws SQLException;
+	public abstract void search(String db, String searchword, ) throws SQLException;
+}
