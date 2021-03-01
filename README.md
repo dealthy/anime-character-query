@@ -1,4 +1,5 @@
 Further Developments
+
  - [ ] search engine that allows filtering with search words
 	- search engine will consider the most relevant results -> the ones that fulfills the most serach word categories
  - [ ] serach engine will search when pressed "ENTER"
@@ -18,11 +19,15 @@ Further Developments
  	- [x] infopage
  	- [ ] browsing page
  	- [x] create page
+ 	- [ ] main window
  - [x] infopage image display in the middle of the screen
- - *info page that display database data (try to imitate Moegirlpedia / Wikipedia style)
- - [ ] black bars to block words
+ - [ ] * info page that display database data (try to imitate Moegirlpedia / Wikipedia style)
+ - [ ] * black bars to block words
  	- [x] use https://www.javatpoint.com/java-jtextpane content to insert custome background + foreground to the text
  	- [ ] create 2 modes while reading, exposed + hidden modes
 
 
  Setting https://github.com/moegirlwiki/ (a chinese online anime character "wikipedia" site) as the developing model
+
+
+ characterInfo = new JTable(dataop.display("a"));

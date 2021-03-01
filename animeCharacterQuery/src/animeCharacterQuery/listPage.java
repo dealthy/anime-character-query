@@ -6,10 +6,12 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+import javax.swing.table.DefaultTableModel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.JList;
 import javax.swing.JScrollPane;
+import javax.swing.JTable;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import java.awt.Font;
@@ -17,16 +19,21 @@ import java.awt.Color;
 import javax.swing.JLabel;
 import java.awt.event.ActionListener;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.awt.event.ActionEvent;
 
 public class listPage extends JFrame {
 
 	private JPanel contentPane;
 	private JTextField searchWord;
-	int sort = 0;
+	private JTable characterInfo;
+	int sortcount = 0;
+	databaseupdate dataop = new databaseupdate();
+	private DefaultTableModel tableinfo;
 
 	/**
 	 * Launch the application.
@@ -46,6 +53,7 @@ public class listPage extends JFrame {
 
 	/**
 	 * Create the frame.
+	 * @throws SQLException 
 	 */
 	public listPage() {
 
@@ -59,6 +67,17 @@ public class listPage extends JFrame {
 			e.printStackTrace();
 		}
 
+	}
+	
+	public void searchforkeyword(String keyword) {
+		//this.tableinfo = dataop.display(keyword);
+		characterInfo.setModel(dataop.display(keyword));
+	}
+	
+	
+	public void changesort(String sortinfo) {
+		//this.tableinfo = dataop.sort(sortinfo);
+		characterInfo.setModel(dataop.sort(sortinfo));
 	}
 
 	public void initGUI() {
@@ -77,24 +96,22 @@ public class listPage extends JFrame {
 		searchWord.setBounds(40, 40, 400, 35);
 		contentPane.add(searchWord);
 		searchWord.setColumns(10);
-		
-		JList characterInfo = new JList();
+
+		characterInfo = new JTable();
+//		/tableinfo = dataop.display("");
+		characterInfo.setModel(dataop.display(""));
 		characterInfo.setBounds(40, 132, 400, 590);
 		contentPane.add(characterInfo);
 		//display all character on JList with the current sorting mech
-		//displayCharacter(sort);
 		
-		JScrollPane scrollCharacterInfo = new JScrollPane();
-		scrollCharacterInfo.setBounds(38, 132, 402, 590);
+		JScrollPane scrollCharacterInfo = new JScrollPane(characterInfo);
+		scrollCharacterInfo.setBounds(40, 132, 400, 590);
 		contentPane.add(scrollCharacterInfo);
 		
 		JButton searchButton = new JButton("search");
 		searchButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				//search keyword
-					//seperate the search word word by word
-					//go over all the options listed in character (except characterid) and features table to search for keywords
-
+				searchforkeyword(searchWord.getText());
 				//mostsearchedcalc();
 			}
 		});
@@ -104,7 +121,7 @@ public class listPage extends JFrame {
 		searchButton.setBounds(452, 40, 149, 35);
 		contentPane.add(searchButton);
 		
-		JLabel sortingMech = new JLabel("A->Z", SwingConstants.CENTER);
+		JLabel sortingMech = new JLabel("First Name", SwingConstants.CENTER);
 		sortingMech.setFont(new Font("Courier", Font.PLAIN, 14));
 		sortingMech.setBounds(452, 124, 149, 35);
 		contentPane.add(sortingMech);
@@ -114,7 +131,19 @@ public class listPage extends JFrame {
 		setSort.setFont(new Font("Courier", Font.PLAIN, 14));
 		setSort.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				//changesort();
+				sortcount += 1;
+				if(sortcount % 3 == 0) {
+					changesort("firstname");
+					sortingMech.setText("First Name");
+				} else if(sortcount % 3 == 1) {
+					changesort("lastname");
+					sortingMech.setText("Last Name");
+				} else if(sortcount % 3 == 2) {
+					changesort("animefrom");
+					sortingMech.setText("Origin Anime");
+				} else {
+					System.out.println("error");
+				}
 			}
 		});
 		setSort.setBounds(452, 157, 149, 35);
@@ -132,7 +161,7 @@ public class listPage extends JFrame {
 		infoPageButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				//go to infoPage
-				infoPage info = new infoPage();
+				infoPage info = new infoPage("pieck");
 				info.setVisible(true);
 			}
 		});
@@ -173,4 +202,7 @@ public class listPage extends JFrame {
 		contentPane.add(deletePage);
 
 	}
+	
+	
+	
 }
