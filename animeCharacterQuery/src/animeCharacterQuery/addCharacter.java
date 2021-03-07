@@ -16,9 +16,9 @@ import java.awt.event.ActionEvent;
 public class addCharacter extends JFrame {
 
 	private JPanel contentPane;
-	private JTextField $firstname;
-	private JTextField $lastname;
-	private JTextField $animefrom;
+	private JTextField firstname;
+	private JTextField lastname;
+	private JTextField animefrom;
 
 	/**
 	 * Launch the application.
@@ -68,22 +68,25 @@ public class addCharacter extends JFrame {
 		animefromlabel.setBounds(61, 179, 113, 23);
 		contentPane.add(animefromlabel);
 		
-		//first name label
-		$firstname = new JTextField();
-		$firstname.setBounds(173, 79, 248, 34);
-		contentPane.add($firstname);
-		$firstname.setColumns(10);
+		//first name field
+		firstname = new JTextField();
+		firstname.setBounds(173, 79, 248, 34);
+		contentPane.add(firstname);
+		firstname.setColumns(10);
 		
-		$lastname = new JTextField();
-		$lastname.setColumns(10);
-		$lastname.setBounds(173, 125, 248, 34);
-		contentPane.add($lastname);
+		//lastname field
+		lastname = new JTextField();
+		lastname.setColumns(10);
+		lastname.setBounds(173, 125, 248, 34);
+		contentPane.add(lastname);
 		
-		$animefrom = new JTextField();
-		$animefrom.setColumns(10);
-		$animefrom.setBounds(173, 167, 248, 34);
-		contentPane.add($animefrom);
+		//origin anime field
+		animefrom = new JTextField();
+		animefrom.setColumns(10);
+		animefrom.setBounds(173, 167, 248, 34);
+		contentPane.add(animefrom);
 		
+		//button to create
 		JButton createbutton = new JButton("create");
 		createbutton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
