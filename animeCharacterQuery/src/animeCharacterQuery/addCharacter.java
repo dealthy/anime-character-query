@@ -11,14 +11,19 @@ import java.awt.Font;
 import javax.swing.JTextField;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+import java.sql.SQLException;
 import java.awt.event.ActionEvent;
 
-public class addCharacter extends JFrame {
+public class addCharacter extends JFrame implements KeyListener{
 
 	private JPanel contentPane;
 	private JTextField firstname;
 	private JTextField lastname;
 	private JTextField animefrom;
+	private boolean commandonpress;
+	
 
 	/**
 	 * Launch the application.
@@ -56,11 +61,13 @@ public class addCharacter extends JFrame {
 		firstnamelabel.setBounds(61, 86, 113, 23);
 		contentPane.add(firstnamelabel);
 		
+		
 		//input last label
 		JLabel lastnamelabel = new JLabel("last name: ");
 		lastnamelabel.setFont(new Font("Courier", Font.PLAIN, 14));
 		lastnamelabel.setBounds(61, 132, 113, 23);
 		contentPane.add(lastnamelabel);
+
 		
 		//anime from label
 		JLabel animefromlabel = new JLabel("anime from: ");
@@ -73,24 +80,34 @@ public class addCharacter extends JFrame {
 		firstname.setBounds(173, 79, 248, 34);
 		contentPane.add(firstname);
 		firstname.setColumns(10);
+		firstname.addKeyListener(this);
 		
 		//lastname field
 		lastname = new JTextField();
 		lastname.setColumns(10);
 		lastname.setBounds(173, 125, 248, 34);
 		contentPane.add(lastname);
+		lastname.addKeyListener(this);
+
 		
 		//origin anime field
 		animefrom = new JTextField();
 		animefrom.setColumns(10);
 		animefrom.setBounds(173, 167, 248, 34);
 		contentPane.add(animefrom);
+		animefrom.addKeyListener(this);
+
 		
 		//button to create
 		JButton createbutton = new JButton("create");
 		createbutton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				createnewcharacter();
+				
+				listPage.dataop.firstname = firstname.getText();
+				listPage.dataop.lastname = lastname.getText();
+				listPage.dataop.animefrom = animefrom.getText();
+				dispose();
+				
 			}
 		});
 		createbutton.setFont(new Font("Courier", Font.PLAIN, 14));
@@ -99,8 +116,27 @@ public class addCharacter extends JFrame {
 		
 	}
 
+	@Override
+	public void keyTyped(KeyEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
 
-	private void createnewcharacter() {
+	@Override
+	public void keyPressed(KeyEvent e) {
+		// TODO Auto-generated method stub
+		if(e.getKeyCode() == 157 ) {
+			commandonpress = true;
+		}
+		if(e.getKeyCode() == 87 && commandonpress == true) {
+			dispose();
+		}
+		
+	}
+
+	@Override
+	public void keyReleased(KeyEvent e) {
+		// TODO Auto-generated method stub
 		
 	}
 }

@@ -4,7 +4,7 @@ Further Developments
 	- search engine will consider the most relevant results -> the ones that fulfills the most serach word categories
  - [x] serach engine will search when pressed "ENTER"
  - [x] window close when "command" + "W" is pressed
- - [ ] Most searched item collection, search history database 
+ - [x] Most searched item collection, search history database 
 	- go over all the options listed in character (except characterid) and features table to search for keywords
 	- ! SQL connection either locked or closed when needed
  - [ ] editing & browsing mode for the page
@@ -15,7 +15,7 @@ Further Developments
  	- belonging anime -- linked to anime table
  	- linked characters + relationship
  	- ...
- - [ ] aesthetics
+ - [ ] * aesthetics
  - [x] command + w to exit the app
  - [x] create corresponding subpages
  	- [x] infopage

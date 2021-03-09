@@ -31,12 +31,16 @@ import java.awt.event.ActionEvent;
 
 public class listPage extends JFrame implements KeyListener {
 
+	/**
+	 * 
+	 */
 	private JPanel contentPane;
 	private JTextField searchWord;
 	private JTable characterInfo;
 	int sortcount = 0;
-	databaseupdate dataop = new databaseupdate();
+	public static databaseupdate dataop = new databaseupdate();
 	private boolean commandonpress = false;
+	private JLabel searchsuggestion;
 
 	//launch the application + GUI
 	public static void main(String[] args) {
@@ -53,17 +57,11 @@ public class listPage extends JFrame implements KeyListener {
 	}
 
 	//default constructor
-	public listPage() {
+	public listPage() throws SQLException {
 
 		//GUI init
 		initGUI();
 
-		//load in the database
-		try {
-			Class.forName("org.sqlite.JDBC");
-		} catch (Exception e){
-			e.printStackTrace();
-		}
 
 	}
 	
@@ -72,7 +70,15 @@ public class listPage extends JFrame implements KeyListener {
 	
 	//searching function
 	public void searchforkeyword(String keyword) throws SQLException {
+		if(dataop.animefrom != "") {
+			dataop.create();
+			dataop.firstname = "";
+			dataop.lastname = "";
+			dataop.animefrom = "";
+		}
 		characterInfo.setModel(dataop.display(keyword));
+		String[] suggestions = dataop.searchadv();
+		searchsuggestion.setText("Most Searched: " + suggestions[0] + " / Most Recent Search: " + suggestions[1]);
 		dataop.addhistory(keyword);
 	}
 	
@@ -81,7 +87,7 @@ public class listPage extends JFrame implements KeyListener {
 		characterInfo.setModel(dataop.sort(sortinfo));
 	}
 
-	public void initGUI() {
+	public void initGUI() throws SQLException {
 
 		//do prefix sum for the entire history database
 
@@ -116,7 +122,7 @@ public class listPage extends JFrame implements KeyListener {
 				if(e.getKeyCode() == 87 && commandonpress == true) {
 					dispose();
 				}
-				if(e.getKeyCode() == 15 && searchWord.getText() != "") {
+				if(e.getKeyCode() == 10 && searchWord.getText() != "") {
 					try {
 						searchforkeyword(searchWord.getText());
 					} catch (SQLException e1) {
@@ -214,14 +220,12 @@ public class listPage extends JFrame implements KeyListener {
 		contentPane.add(setSort);
 		
 		//suggest the most searched + most recent searched item
-		JLabel searchSuggestion = new JLabel("Most Searched");
-		searchSuggestion.setFont(new Font("Courier", Font.PLAIN, 14));
-		searchSuggestion.setBounds(40, 87, 400, 33);
-		contentPane.add(searchSuggestion);
-		//display most searched word
-			//record the previous search && add to the prefix sum calc
-			//suggest the current most searched
-		//mostsearchedcalc();
+		searchsuggestion = new JLabel("");
+		String[] suggestions = dataop.searchadv();
+		searchsuggestion.setText("Most Searched: " + suggestions[0] + " / Most Recent Search: " + suggestions[1]);
+		searchsuggestion.setFont(new Font("Courier", Font.PLAIN, 14));
+		searchsuggestion.setBounds(40, 87, 561, 33);
+		contentPane.add(searchsuggestion);
 		
 		//open infopage
 		JButton infoPageButton = new JButton("browse");

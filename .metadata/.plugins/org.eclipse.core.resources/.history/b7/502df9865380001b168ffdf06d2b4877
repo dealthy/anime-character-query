@@ -1,0 +1,70 @@
+package animeCharacterQuery;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.Statement;
+
+public class databasecon {
+	
+	private String db = "jdbc:sqlite:/Volumes/SHARE/ComputerScience/HarryYu-IBCSdatabaseMiniProject/animeCharacterQuery/character.db";
+	private Connection con;
+	
+	public databasecon() {
+		
+		//open database connection
+		try {
+			Class.forName("org.sqlite.JDBC");
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		
+		try {
+			
+			con = DriverManager.getConnection(this.db);
+			
+			System.out.println("connection init");
+			
+		} catch (Exception e) {
+			
+			e.printStackTrace();
+			
+		}
+		
+	}
+	
+	public ResultSet getsql(String sql) {
+		
+		ResultSet rs = null;
+		
+		try {
+			
+			//creating statement
+			
+			Statement sqlstring = con.createStatement();
+			
+			//execute sql query
+			
+			try {
+				rs = sqlstring.executeQuery(sql);
+			} catch(Exception f) {
+				rs = null;
+				sqlstring.executeUpdate(sql);
+			}
+			
+			System.out.println("sql executed");
+ 			
+			
+			
+			
+			
+		} catch (Exception e) {
+			
+			e.printStackTrace();
+			
+		}
+		
+		return rs;
+		
+	}
+}

@@ -21,9 +21,9 @@ public class databaseupdate {
 	
 	//selected characterinfo
 	
-	private int characterid;
+	public int characterid;
 	
-	private String firstname, lastname, animefrom;
+	public String firstname, lastname, animefrom;
 	
 	//sorting archieved information
 	
@@ -31,26 +31,20 @@ public class databaseupdate {
 	
 	private String sortinfo = "firstname";
 	
-	//database location
+	private databasecon conn = new databasecon();
 	
-	private String db = "jdbc:sqlite:/Volumes/SHARE/ComputerScience/HarryYu-IBCSdatabaseMiniProject/animeCharacterQuery/character.db";
-	
-	public Connection conn = getcon();
-	
-	
-	public Connection getcon() throws Exception {
-		Connection con = DriverManager.getConnection(this.db);
-		return con;
-	}
-	
-	public databaseupdate() {
+	public String[] searchadv() throws SQLException {
 		
-		//open database connection
-		try {
-			Class.forName("org.sqlite.JDBC");
-		} catch(Exception e) {
-			e.printStackTrace();
-		}
+		
+		String[] searchsuggestions = {"", ""};
+		String sqlstring = "SELECT searchword FROM history GROUP BY searchword HAVING COUNT(*) = (SELECT MAX(Cnt) FROM(SELECT COUNT(*) as Cnt FROM history GROUP BY searchword ) tmp)";
+		ResultSet rs = conn.getsql(sqlstring);
+		searchsuggestions[0] = rs.getString("searchword");
+		sqlstring = "select searchword from history order by recordid desc limit 1";
+		rs = conn.getsql(sqlstring);
+		searchsuggestions[1] = rs.getString("searchword");
+		
+		return searchsuggestions;
 		
 	}
 	
@@ -68,39 +62,66 @@ public class databaseupdate {
 			
 			//pouring the data in from the ResultSet to the tempoarily ArrayList
 			
-			HashSet<String> tempfirst = new HashSet<String>();
+			TreeSet<String> tempfirst = new TreeSet<String>();
 			
-			HashSet<String> templast = new HashSet<String>();
+			TreeSet<String> templast = new TreeSet<String>();
 			
-			HashSet<String> tempanime = new HashSet<String>();
+			TreeSet<String> tempanime = new TreeSet<String>();
+			
+			ArrayList<String> first = new ArrayList<String>();
+			
+			ArrayList<String> last = new ArrayList<String>();
+			
+			ArrayList<String> anime = new ArrayList<String>();
+			
+			int size = 0;
 
 			for(ResultSet rs : resultsets){
-				
-				//temp.add(new Object[]{rs.getString("firstname"), rs.getString("lastname"), rs.getString("animefrom")});
-				tempfirst.add(rs.getString("firstname"));
-				templast.add(rs.getString("lastname"));
-				tempanime.add(rs.getString("animefrom"));
+				while (rs.next()) {
+					size = tempfirst.size();
+					tempfirst.add(rs.getString("firstname"));
+					if(tempfirst.size() == size + 1) {
+						first.add(rs.getString("firstname"));
+					}
+					System.out.println(rs.getString("firstname"));
+					size = templast.size();
+					templast.add(rs.getString("lastname"));
+					if(templast.size() == size + 1) {
+						last.add(rs.getString("lastname"));
+					}
+					System.out.println(rs.getString("lastname"));
+					size = tempanime.size();
+					tempanime.add(rs.getString("animefrom"));
+					if(tempanime.size() == size + 1) {
+						anime.add(rs.getString("animefrom"));
+					}
+					System.out.println(rs.getString("animefrom"));
+				}
 
 			}
 			
 			//fixing the size of the array
 			
-			Object[][] data = new Object[tempfirst.size()][3];
+			Object[][] data = new Object[first.size()][3];
 			
 			//pouring the data from ArrayList to Array
 			
-			Object[] container = {"", "", ""};
-			
-			Iterator<String> a = tempfirst.iterator();
-			Iterator<String> b = templast.iterator();
-			Iterator<String> c = tempanime.iterator();
+			Iterator<String> a = first.iterator();
+			Iterator<String> b = last.iterator();
+			Iterator<String> c = anime.iterator();
 			
 			int i = 0;
 			
-			while(a.hasNext()) {
+			while(true) {
 				data[i][0] = a.next();
+				System.out.println(data[i][0]);
 				data[i][1] = b.next();
+				System.out.println(data[i][1]);
 				data[i][2] = c.next();
+				System.out.println(data[i][2]);
+				if(a.hasNext() == false) {
+					break;
+				}
 				i++;
 			}
 	
@@ -110,6 +131,7 @@ public class databaseupdate {
 			
 			
 			return model;	
+			
 
 
 		} catch (Exception f) {
@@ -128,8 +150,14 @@ public class databaseupdate {
 		return this.display(this.lastsearch);
 	}
 
-	public void create(String firstname, String lastname, String animefrom) {
+	public void create() throws SQLException {
 		// TODO Auto-generated method stub
+		try {
+			String sqlstring = "insert into character (firstname, lastname, animefrom) values ('" + this.firstname + "', '" + this.lastname + "', '" + this.animefrom + "')";
+			ResultSet rs = conn.getsql(sqlstring);
+		} catch(Exception e){
+			e.printStackTrace();
+		}
 		
 	}
 
@@ -145,6 +173,8 @@ public class databaseupdate {
 	
 	public void addhistory(String searchcontent) throws SQLException {
 		
+		System.out.println("in addhistory()");
+		
 		try {
 			
 			//sql statment
@@ -153,34 +183,9 @@ public class databaseupdate {
 			
 			//execute sql query
 			
-			ResultSet rs = getconn(sqlstring);
+			ResultSet rs = conn.getsql(sqlstring);
 			
-			System.out.println("added" + searchcontent);
-			
-			
-		} catch (Exception e) {
-			
-			e.printStackTrace();
-			
-		}
-		
-	}
-	
-	public ResultSet getconn(String sql) throws SQLException {
-		
-		
-		ResultSet rs = null;
-		
-		try {
-			
-			//creating statement
-			
-			Statement sqlstring = getcon().createStatement();
-			
-			//execute sql query
-			
-			rs = sqlstring.executeQuery(sql);
-			
+			System.out.println("added " + searchcontent);
 			
 			
 		} catch (Exception e) {
@@ -188,8 +193,6 @@ public class databaseupdate {
 			e.printStackTrace();
 			
 		}
-		
-		return rs;
 		
 	}
 
@@ -240,10 +243,15 @@ public class databaseupdate {
 				
 				String sqlstring = "SELECT * FROM character WHERE firstname LIKE '%" + searchwordlist.get(i) + "%' OR lastname LIKE '%" + searchwordlist.get(i) + "%' OR animefrom LIKE '%" + searchwordlist.get(i) + "%' ORDER BY " + sortinfo + " ASC";
 				
+				System.out.println(sqlstring);
 				
-				ResultSet rs = getconn(sqlstring);
+				ResultSet rs = conn.getsql(sqlstring);
+				
+				System.out.println("back to mainpage");
 				
 				tablecontents.add(rs);
+				
+				//rs.close();
 				
 				System.out.println("searching");
 				
@@ -258,9 +266,13 @@ public class databaseupdate {
 			}
 			
 			
+			
 		}
+		
 			
 		return tablecontents;
+		
+		
 		
 		
 		
