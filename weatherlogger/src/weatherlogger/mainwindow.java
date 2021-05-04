@@ -11,8 +11,25 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
+
+import org.jfree.chart.ChartPanel;
+import org.jfree.chart.ChartFactory;
+import org.jfree.chart.JFreeChart;
+import org.jfree.chart.plot.PlotOrientation;
+import org.jfree.data.category.DefaultCategoryDataset;
+
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
+
+/*
+import org.jfree.chart.ChartPanel;
+
+import org.jfree.chart.JFreeChart;
+import org.jfree.ui.ApplicationFrame;
+import org.jfree.ui.RefineryUtilities;
+import org.jfree.chart.plot.PlotOrientation;
+import org.jfree.data.category.DefaultCategoryDataset;
+*/
 
 public class mainwindow extends JFrame {
 
@@ -25,6 +42,7 @@ public class mainwindow extends JFrame {
 	/**
 	 * Launch the application.
 	 */
+
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -94,12 +112,21 @@ public class mainwindow extends JFrame {
         return days;
 	}
 	
-	public void graphdata() {
+	public DefaultCategoryDataset graphdata() {
 		int start = dataprocess(this.start.getText());
 		int endraw = dataprocess(this.end.getText());
 		String xaxis = this.category.getSelectedItem().toString();
 		System.out.println("plotting graph");
 		this.msg.setText("plotting graph");
+		DefaultCategoryDataset dataset = new DefaultCategoryDataset( );
+		dataset.addValue( 15 , "schools" , "1970" );
+		dataset.addValue( 30 , "schools" , "1980" );
+		dataset.addValue( 60 , "schools" ,  "1990" );
+		dataset.addValue( 120 , "schools" , "2000" );
+		dataset.addValue( 240 , "schools" , "2010" );
+		dataset.addValue( 300 , "schools" , "2014" );
+		//dataset.addValue( 300 , "assholes" , "2014" );
+		return dataset;
 	}
 	
 	public void init() {
@@ -110,11 +137,7 @@ public class mainwindow extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
-		
-		JPanel graphpanel = new JPanel();
-		graphpanel.setBounds(26, 25, 734, 497);
-		contentPane.add(graphpanel);
-		
+
 		JLabel startdatelabel = new JLabel("from: ");
 		startdatelabel.setBounds(772, 58, 61, 16);
 		contentPane.add(startdatelabel);
@@ -166,9 +189,24 @@ public class mainwindow extends JFrame {
 		contentPane.add(categorylbl);
 		
 		category = new JComboBox();
-		category.setModel(new DefaultComboBoxModel(new String[] {"humidity", "temperature", "albedo", "wind speed and direction"}));
+		category.setModel(new DefaultComboBoxModel(new String[] {"temperature", "humidity", "albedo", "wind speed and direction"}));
 		category.setBounds(772, 216, 122, 27);
 		contentPane.add(category);
+
+
+		JFreeChart lineChart = ChartFactory.createLineChart(
+			"Temperature vs Time",
+			"Time","Temperature",
+			graphdata(),
+			PlotOrientation.VERTICAL,
+			true,true,false);
+
+		
+		ChartPanel graphpanel = new ChartPanel( lineChart );
+		graphpanel.setBounds(26, 25, 734, 497);
+		contentPane.add(graphpanel);
+		graphpanel.setVisible(true);
+		
 		
 	}
 
@@ -177,5 +215,12 @@ public class mainwindow extends JFrame {
 	 */
 	public mainwindow() {
 		this.init();
+
+		try {
+			Class.forName("org.sqlite.JDBC");
+		} catch (Exception e){
+			//in case the database doesnt exist
+			e.printStackTrace();
+		}
 	}
 }

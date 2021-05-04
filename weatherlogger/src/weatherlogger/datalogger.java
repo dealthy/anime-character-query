@@ -96,7 +96,7 @@ public class datalogger extends JFrame {
 		contentPane.add(temp);
 		
 		tempunit = new JComboBox();
-		tempunit.setModel(new DefaultComboBoxModel(new String[] {"Celsius (°C)", "Fahrenheit (°F)"}));
+		tempunit.setModel(new DefaultComboBoxModel(new String[] {"°C", "°F"}));
 		tempunit.setBounds(305, 174, 70, 27);
 		contentPane.add(tempunit);
 		
@@ -239,9 +239,41 @@ public class datalogger extends JFrame {
 
 	public void dataprocess() {
 		int date = dateprocess(this.date.getText());
+		double temperature = 0;
+		try {
+			temperature = Double.parseDouble(this.temp.getText());
+		} catch(Exception e) {
+			this.msg.setText("temperature data error");
+			e.printStackTrace();
+		} 
 		if(tempunit.getSelectedItem() == "Fahrenheit (°F)") {
-			
+			temperature = (double)(temperature - 32) * 5/9;
 		}
+		
+		double albedo = 0;
+		try {
+			albedo = Double.parseDouble(this.albedo.getText());
+		} catch(Exception e) {
+			this.msg.setText("albedo data error");
+			e.printStackTrace();
+		} 
+		String winddirection = (String) this.winddirection.getSelectedItem();
+		double windspeed = 0;
+		try {
+			windspeed = Double.parseDouble(this.windspeed.getText());
+		} catch(Exception e) {
+			this.msg.setText("wind speed data error");
+			e.printStackTrace();
+		} 
+		double humidity = 0;
+		try {
+			humidity = Double.parseDouble(this.humidity.getText());
+		} catch(Exception e) {
+			this.msg.setText("humidity data error");
+			e.printStackTrace();
+		} 
+
+		insertsql(date, temperature, albedo, winddirection, windspeed, humidity);
 	}
 
 	public Connection buildConnection() {
