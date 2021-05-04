@@ -1,5 +1,0 @@
-package animeCharacterQuery;
-
-public class databasecon {
-	private String db = "jdbc:sqlite:/Volumes/SHARE/ComputerScience/HarryYu-IBCSdatabaseMiniProject/animeCharacterQuery/character.db";
-}
